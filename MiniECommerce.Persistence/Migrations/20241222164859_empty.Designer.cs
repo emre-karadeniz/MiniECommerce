@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using MiniECommerce.Persistence;
 
@@ -11,9 +12,11 @@ using MiniECommerce.Persistence;
 namespace MiniECommerce.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241222164859_empty")]
+    partial class empty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -170,32 +173,6 @@ namespace MiniECommerce.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("91b9889d-2019-4e5e-9c89-f0010c9b6e93"),
-                            CreatedDate = new DateTime(2024, 12, 22, 19, 49, 28, 668, DateTimeKind.Local).AddTicks(3156),
-                            Name = "Laptop",
-                            Price = 50000m,
-                            Stock = 10
-                        },
-                        new
-                        {
-                            Id = new Guid("2528a868-07b4-4d26-b96a-b0cb18e0bd05"),
-                            CreatedDate = new DateTime(2024, 12, 22, 19, 49, 28, 668, DateTimeKind.Local).AddTicks(3471),
-                            Name = "Telefon",
-                            Price = 20000m,
-                            Stock = 12
-                        },
-                        new
-                        {
-                            Id = new Guid("30a8e2ad-eda9-4c4a-b3dd-081624f67d30"),
-                            CreatedDate = new DateTime(2024, 12, 22, 19, 49, 28, 668, DateTimeKind.Local).AddTicks(3481),
-                            Name = "Tablet",
-                            Price = 8000m,
-                            Stock = 7
-                        });
                 });
 
             modelBuilder.Entity("MiniECommerce.Domain.Users.Role", b =>
@@ -212,18 +189,6 @@ namespace MiniECommerce.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Admin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "User"
-                        });
                 });
 
             modelBuilder.Entity("MiniECommerce.Domain.Users.User", b =>
@@ -256,28 +221,6 @@ namespace MiniECommerce.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("7423cc82-b04f-4055-829f-7992b2d73218"),
-                            CreatedDate = new DateTime(2024, 12, 22, 19, 49, 28, 667, DateTimeKind.Local).AddTicks(2226),
-                            FirstName = "Admin",
-                            LastName = "Admin",
-                            PWHash = new byte[] { 214, 48, 148, 32, 58, 199, 86, 153, 231, 140, 108, 205, 162, 136, 148, 106, 76, 177, 18, 241, 240, 140, 223, 39, 253, 109, 95, 26, 141, 44, 64, 210, 120, 229, 247, 170, 191, 247, 83, 175, 213, 199, 192, 57, 41, 99, 230, 90, 65, 84, 126, 71, 72, 67, 148, 224, 166, 250, 129, 105, 111, 152, 27, 84 },
-                            PWSalt = new byte[] { 221, 57, 155, 174, 151, 49, 132, 182, 146, 194, 31, 184, 217, 172, 103, 161, 226, 144, 72, 216, 232, 138, 27, 152, 120, 255, 135, 253, 75, 39, 23, 172, 25, 71, 129, 212, 174, 228, 210, 13, 117, 27, 133, 112, 8, 202, 209, 153, 46, 107, 123, 221, 123, 151, 67, 3, 43, 60, 42, 5, 227, 224, 179, 203, 7, 12, 39, 118, 31, 210, 127, 89, 43, 119, 183, 17, 206, 164, 59, 248, 165, 137, 0, 237, 116, 59, 166, 34, 112, 175, 156, 160, 43, 115, 127, 71, 234, 95, 35, 131, 4, 223, 41, 41, 133, 35, 53, 25, 158, 199, 201, 254, 239, 16, 163, 241, 244, 150, 250, 212, 41, 146, 121, 122, 140, 6, 140, 104 },
-                            UserName = "admin"
-                        },
-                        new
-                        {
-                            Id = new Guid("e6cdc519-0d8c-4c6e-9f01-458fbda440c0"),
-                            CreatedDate = new DateTime(2024, 12, 22, 19, 49, 28, 668, DateTimeKind.Local).AddTicks(2364),
-                            FirstName = "Test",
-                            LastName = "Test",
-                            PWHash = new byte[] { 214, 48, 148, 32, 58, 199, 86, 153, 231, 140, 108, 205, 162, 136, 148, 106, 76, 177, 18, 241, 240, 140, 223, 39, 253, 109, 95, 26, 141, 44, 64, 210, 120, 229, 247, 170, 191, 247, 83, 175, 213, 199, 192, 57, 41, 99, 230, 90, 65, 84, 126, 71, 72, 67, 148, 224, 166, 250, 129, 105, 111, 152, 27, 84 },
-                            PWSalt = new byte[] { 221, 57, 155, 174, 151, 49, 132, 182, 146, 194, 31, 184, 217, 172, 103, 161, 226, 144, 72, 216, 232, 138, 27, 152, 120, 255, 135, 253, 75, 39, 23, 172, 25, 71, 129, 212, 174, 228, 210, 13, 117, 27, 133, 112, 8, 202, 209, 153, 46, 107, 123, 221, 123, 151, 67, 3, 43, 60, 42, 5, 227, 224, 179, 203, 7, 12, 39, 118, 31, 210, 127, 89, 43, 119, 183, 17, 206, 164, 59, 248, 165, 137, 0, 237, 116, 59, 166, 34, 112, 175, 156, 160, 43, 115, 127, 71, 234, 95, 35, 131, 4, 223, 41, 41, 133, 35, 53, 25, 158, 199, 201, 254, 239, 16, 163, 241, 244, 150, 250, 212, 41, 146, 121, 122, 140, 6, 140, 104 },
-                            UserName = "test"
-                        });
                 });
 
             modelBuilder.Entity("MiniECommerce.Domain.Users.UserRole", b =>
@@ -293,18 +236,6 @@ namespace MiniECommerce.Persistence.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("UserRoles");
-
-                    b.HasData(
-                        new
-                        {
-                            UserId = new Guid("7423cc82-b04f-4055-829f-7992b2d73218"),
-                            RoleId = 1
-                        },
-                        new
-                        {
-                            UserId = new Guid("e6cdc519-0d8c-4c6e-9f01-458fbda440c0"),
-                            RoleId = 2
-                        });
                 });
 
             modelBuilder.Entity("MiniECommerce.Domain.Baskets.Basket", b =>
