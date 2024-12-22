@@ -17,9 +17,10 @@ namespace MiniECommerce.Persistence
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-        //    optionsBuilder
-        //.ConfigureWarnings(warnings =>
-        //    warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
+            //SeedData hata verdiği için uyarıyı bastırdım.
+            optionsBuilder
+        .ConfigureWarnings(warnings =>
+            warnings.Ignore(RelationalEventId.PendingModelChangesWarning));
             base.OnConfiguring(optionsBuilder);
         }
 
@@ -39,7 +40,7 @@ namespace MiniECommerce.Persistence
                 .HasForeignKey(o => o.UserId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            //SeedData(modelBuilder);
+            SeedData(modelBuilder);
             base.OnModelCreating(modelBuilder);
         }
 
