@@ -18,8 +18,12 @@ internal class ExceptionHandlerMiddleware(
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "An exception occurred: {Message}", ex.Message);
-            LogExceptionToFile(ex.Message);
+            if(ex is not ValidationException)
+            {
+                logger.LogError(ex, "An exception occurred: {Message}", ex.Message);
+                LogExceptionToFile(ex.Message);
+            }
+            
             await HandleExceptionAsync(httpContext, ex);
         }
     }
