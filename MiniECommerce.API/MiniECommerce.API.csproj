@@ -2,15 +2,22 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MiniECommerce.Contracts\MiniECommerce.Contracts.csproj" />
+    <ProjectReference Include="..\MiniECommerce.Infrastructure\MiniECommerce.Infrastructure.csproj" />
     <ProjectReference Include="..\MiniECommerce.Persistence\MiniECommerce.Persistence.csproj" />
   </ItemGroup>
 
