@@ -53,7 +53,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "MONASSIST BASE API");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "MÝNÝ E-COMMERCE API");
     });
     app.ApplyMigrations();
 }
