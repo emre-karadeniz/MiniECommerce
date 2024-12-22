@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniECommerce.Domain", "MiniECommerce.Domain\MiniECommerce.Domain.csproj", "{E6CF24C0-365A-4EC1-9361-C55802B5DEC1}"
 EndProject
@@ -10,6 +10,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniECommerce.Persistence", "MiniECommerce.Persistence\MiniECommerce.Persistence.csproj", "{C93DB62E-8D7B-4AB9-AA4A-B8D63DCE92E7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniECommerce.API", "MiniECommerce.API\MiniECommerce.API.csproj", "{DE57C390-7612-42F6-9391-3E9B8460D1BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniECommerce.Contracts", "MiniECommerce.Contracts\MiniECommerce.Contracts.csproj", "{A1FBFE15-5A28-4238-9EBA-B0C0C5D0FD3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiniECommerce.Infrastructure", "MiniECommerce.Infrastructure\MiniECommerce.Infrastructure.csproj", "{1D1B39B4-7AC5-492C-9688-0AF067005138}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{DE57C390-7612-42F6-9391-3E9B8460D1BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE57C390-7612-42F6-9391-3E9B8460D1BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE57C390-7612-42F6-9391-3E9B8460D1BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1FBFE15-5A28-4238-9EBA-B0C0C5D0FD3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1FBFE15-5A28-4238-9EBA-B0C0C5D0FD3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1FBFE15-5A28-4238-9EBA-B0C0C5D0FD3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1FBFE15-5A28-4238-9EBA-B0C0C5D0FD3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1D1B39B4-7AC5-492C-9688-0AF067005138}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D1B39B4-7AC5-492C-9688-0AF067005138}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D1B39B4-7AC5-492C-9688-0AF067005138}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D1B39B4-7AC5-492C-9688-0AF067005138}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
