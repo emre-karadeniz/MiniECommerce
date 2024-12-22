@@ -1,12 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MiniECommerce.Application.Abstractions.Data;
-using MiniECommerce.Domain.Products;
 using MiniECommerce.Domain.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniECommerce.Persistence.Repositories
 {
@@ -27,15 +21,15 @@ namespace MiniECommerce.Persistence.Repositories
 
         public async Task<User> GetByUserNameAsync(string userName, CancellationToken cancellationToken = default)
         {
-            return await GetAsync(x => x.UserName == userName, null, cancellationToken);
+            return await GetAsync(u => u.UserName == userName, null, cancellationToken);
         }
 
         public async Task<List<Role>> GetRolesAsync(Guid userId, CancellationToken cancellationToken = default)
         {
             List<Role> roles = await _appDbContext.Set<UserRole>()
-                .Include(x => x.Role)
-                .Where(x => x.UserId == userId)
-                .Select(x => x.Role)
+                .Include(ur => ur.Role)
+                .Where(ur => ur.UserId == userId)
+                .Select(ur => ur.Role)
                 .AsNoTracking()
                 .ToListAsync();
             return roles;
@@ -43,7 +37,7 @@ namespace MiniECommerce.Persistence.Repositories
 
         public async Task<bool> IsUserNameUniqueAsync(string userName, CancellationToken cancellationToken = default)
         {
-            return await AnyAsync(x => x.UserName == userName, cancellationToken);
+            return await AnyAsync(u => u.UserName == userName, cancellationToken);
         }
     }
 }

@@ -2,11 +2,6 @@
 using Microsoft.EntityFrameworkCore.Storage;
 using MiniECommerce.Application.Abstractions.Data;
 using MiniECommerce.Application.Abstractions.Messaging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniECommerce.Application.Core.Behaviors
 {

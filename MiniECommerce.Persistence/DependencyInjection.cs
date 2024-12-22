@@ -12,7 +12,7 @@ namespace MiniECommerce.Persistence
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddPersistence(this IServiceCollection services,IConfiguration configuration)
+        public static IServiceCollection AddPersistence(this IServiceCollection services, IConfiguration configuration)
         {
             string connectionString = configuration.GetConnectionString("MiniECommerceDb");
             services.AddDbContext<AppDbContext>

@@ -1,6 +1,7 @@
 ﻿using MiniECommerce.Application.Abstractions.Authentication.Jwt;
 using MiniECommerce.Application.Abstractions.Data;
 using MiniECommerce.Application.Abstractions.Messaging;
+using MiniECommerce.Application.Core.Constants;
 using MiniECommerce.Domain.Baskets;
 using MiniECommerce.Domain.Core;
 using MiniECommerce.Domain.Products;
@@ -27,14 +28,14 @@ namespace MiniECommerce.Application.Baskets.Commands.CreateBasketItem
         public async Task<Result<NoContentDto>> Handle(CreateBasketItemCommand request, CancellationToken cancellationToken)
         {
             var product = await _productRepository.GetByIdAsync(request.ProductId, cancellationToken);
-            if (product == null) 
+            if (product == null)
             {
-                return Result<NoContentDto>.NotFound("ürün bulunamadı");
+                return Result<NoContentDto>.NotFound(Messages.Common.NotFound);
             }
 
-            if (product.Stock<request.Quantity) 
+            if (product.Stock < request.Quantity)
             {
-                return Result<NoContentDto>.BadRequest("yeterli stok yok. ürün eklenemedi");
+                return Result<NoContentDto>.BadRequest("There is not enough stock for this product. Could not add to basket.");
             }
 
             var basket = await _basketRepository.GetActiveBasketAsNoTrackingAsync(_userIdentifierProvider.UserId, cancellationToken);
@@ -69,7 +70,7 @@ namespace MiniECommerce.Application.Baskets.Commands.CreateBasketItem
 
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
-            return Result<NoContentDto>.Success("Ürün sepete eklendi.");
+            return Result<NoContentDto>.Success("Product added to basket.");
         }
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MiniECommerce.Infrastructure.Authentication.Jwt.Settings
+﻿namespace MiniECommerce.Infrastructure.Authentication.Jwt.Settings
 {
     public class TokenOptions
     {

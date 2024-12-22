@@ -1,5 +1,4 @@
 ﻿using FluentValidation;
-using Microsoft.AspNetCore.Http.HttpResults;
 using MiniECommerce.Application.Core.Constants;
 using MiniECommerce.Domain.Core;
 using System.Net;
@@ -20,7 +19,7 @@ internal class ExceptionHandlerMiddleware(
         catch (Exception ex)
         {
             logger.LogError(ex, "An exception occurred: {Message}", ex.Message);
-
+            LogExceptionToFile(ex.Message);
             await HandleExceptionAsync(httpContext, ex);
         }
     }
@@ -46,9 +45,15 @@ internal class ExceptionHandlerMiddleware(
         exception switch
         {
             ValidationException validationException => (HttpStatusCode.BadRequest, Result<NoContentDto>.BadRequest(validationException.Errors.Select(x => x.ErrorMessage).ToList())),
-            //DomainException domainException => (HttpStatusCode.BadRequest, new[] { domainException.Error }),
             _ => (HttpStatusCode.InternalServerError, Result<NoContentDto>.Error(Messages.Common.Error))
         };
+
+    private void LogExceptionToFile(string message)
+    {
+        var logFilePath = Path.Combine(Directory.GetCurrentDirectory(), "logs", "errors.txt");
+        Directory.CreateDirectory(Path.GetDirectoryName(logFilePath));
+        File.AppendAllText(logFilePath, $"{DateTime.Now}: {message}{Environment.NewLine}");
+    }
 }
 
 internal static class ExceptionHandlerMiddlewareExtensions

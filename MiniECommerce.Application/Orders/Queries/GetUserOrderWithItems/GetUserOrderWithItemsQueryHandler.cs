@@ -2,14 +2,10 @@
 using MiniECommerce.Application.Abstractions.Authentication.Jwt;
 using MiniECommerce.Application.Abstractions.Data;
 using MiniECommerce.Application.Abstractions.Messaging;
+using MiniECommerce.Application.Core.Constants;
 using MiniECommerce.Contracts.Orders;
 using MiniECommerce.Domain.Core;
 using MiniECommerce.Domain.Orders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniECommerce.Application.Orders.Queries.GetUserOrderWithItems
 {
@@ -27,26 +23,26 @@ namespace MiniECommerce.Application.Orders.Queries.GetUserOrderWithItems
         public async Task<Result<UserOrderWithItemsResponse>> Handle(GetUserOrderWithItemsQuery request, CancellationToken cancellationToken)
         {
             var response = await _appDbContext.Set<Order>()
-                .Where(x => x.UserId == _userIdentifierProvider.UserId && x.Id == request.OrderId)
-                .Include(x=>x.OrderItems)
-                .OrderByDescending(x => x.CreatedDate)
-                .Select(x => new UserOrderWithItemsResponse()
+                .Where(o => o.UserId == _userIdentifierProvider.UserId && o.Id == request.OrderId)
+                .Include(o => o.OrderItems)
+                .OrderByDescending(o => o.CreatedDate)
+                .Select(o => new UserOrderWithItemsResponse()
                 {
-                    Id = x.Id,
-                    Status = x.Status.ToString(),
-                    TotalPrice = x.TotalPrice,
-                    CreatedDate = x.CreatedDate,
-                    OrderItems =x.OrderItems.Select(i => new OrderItemResponse()
+                    Id = o.Id,
+                    Status = o.Status.ToString(),
+                    TotalPrice = o.TotalPrice,
+                    CreatedDate = o.CreatedDate,
+                    OrderItems = o.OrderItems.Select(i => new OrderItemResponse()
                     {
-                        Id=i.Id,
+                        Id = i.Id,
                         ProductId = i.ProductId,
                         ProductName = i.ProductName,
                         ProductPrice = i.ProductPrice,
                         Quantity = i.Quantity
                     }).ToList()
-                }).FirstOrDefaultAsync();
+                }).AsNoTracking().FirstOrDefaultAsync();
 
-            return Result<UserOrderWithItemsResponse>.Success("", response);
+            return Result<UserOrderWithItemsResponse>.Success(Messages.Common.Success, response);
         }
     }
 }

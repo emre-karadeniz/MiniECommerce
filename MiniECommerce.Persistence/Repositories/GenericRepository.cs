@@ -74,7 +74,7 @@ namespace MiniECommerce.Persistence.Repositories
             _appDbContext.Set<TEntity>().Update(entity);
         }
 
-        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> expression, IList<Expression<Func<TEntity, object>>> includeProperties = null, CancellationToken cancellationToken=default)
+        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> expression, IList<Expression<Func<TEntity, object>>> includeProperties = null, CancellationToken cancellationToken = default)
         {
             IQueryable<TEntity> query = _appDbContext.Set<TEntity>();
 

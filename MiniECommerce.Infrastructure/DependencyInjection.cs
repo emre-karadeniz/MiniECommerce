@@ -11,6 +11,7 @@ using MiniECommerce.Domain.Core;
 using System.Text.Json;
 using MiniECommerce.Application.Abstractions.Encryption;
 using MiniECommerce.Infrastructure.Encryption;
+using MiniECommerce.Application.Core.Constants;
 
 namespace MiniECommerce.Infrastructure
 {
@@ -38,7 +39,7 @@ namespace MiniECommerce.Infrastructure
                         ValidAudience = tokenOptions.Audience,
                         IssuerSigningKey = new SymmetricSecurityKey(
                             Encoding.UTF8.GetBytes(tokenOptions.SecurityKey)),
-
+                        ClockSkew = TimeSpan.Zero
                     };
                     options.Events = new JwtBearerEvents
                     {
@@ -47,8 +48,8 @@ namespace MiniECommerce.Infrastructure
                             context.HandleResponse();
                             context.Response.StatusCode = 401;
                             context.Response.ContentType = "application/json";
-                            var errorMessage = new List<string> { "A valid token was not provided. Please log in." };
-                            var json = JsonSerializer.Serialize(new Result<NoContentDto> { Mesaj = errorMessage });
+                            var errorMessage = new List<string> { Messages.Login.ValidToken };
+                            var json = JsonSerializer.Serialize(new Result<NoContentDto> { Message = errorMessage });
                             return context.Response.WriteAsync(json);
                         },
                         OnForbidden = context =>
@@ -56,8 +57,8 @@ namespace MiniECommerce.Infrastructure
 
                             context.Response.StatusCode = 403;
                             context.Response.ContentType = "application/json";
-                            var errorMessage = new List<string> { "Access denied: You do not have the required permissions to perform this action." };
-                            var json = JsonSerializer.Serialize(new Result<NoContentDto> { Mesaj = errorMessage });
+                            var errorMessage = new List<string> { Messages.Login.AccessDenied };
+                            var json = JsonSerializer.Serialize(new Result<NoContentDto> { Message = errorMessage });
                             return context.Response.WriteAsync(json);
                         }
                     };
@@ -66,7 +67,7 @@ namespace MiniECommerce.Infrastructure
             services.AddScoped<ITokenHelper, JwtHelper>();
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IUserIdentifierProvider, UserIdentifierProvider>();
-            services.AddScoped<IHashingHelper,HashingHelper>();
+            services.AddScoped<IHashingHelper, HashingHelper>();
 
             return services;
         }

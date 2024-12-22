@@ -4,7 +4,7 @@ namespace MiniECommerce.Domain.Core
 {
     public class Result<T>
     {
-        public List<string> Mesaj { get; set; }
+        public List<string> Message { get; set; }
         public T Data { get; set; }
 
         [JsonIgnore]
@@ -12,63 +12,63 @@ namespace MiniECommerce.Domain.Core
 
 
         //getir metotları, data döner
-        public static Result<T> Success(string mesaj, T data)
+        public static Result<T> Success(string message, T data)
         {
-            return new Result<T> { StatusCode = 200, Mesaj = new List<string> { mesaj }, Data = data };
+            return new Result<T> { StatusCode = 200, Message = new List<string> { message }, Data = data };
         }
 
         //başarılı işlem, sadece mesaj
-        public static Result<T> Success(string mesaj)
+        public static Result<T> Success(string message)
         {
-            return new Result<T> { StatusCode = 200, Mesaj = new List<string> { mesaj } };
+            return new Result<T> { StatusCode = 200, Message = new List<string> { message } };
         }
 
         //kaydet, genelde geri dönüş id'dir
-        public static Result<T> Created(string mesaj, T data)
+        public static Result<T> Created(string message, T data)
         {
-            return new Result<T> { StatusCode = 201, Mesaj = new List<string> { mesaj }, Data = data };
+            return new Result<T> { StatusCode = 201, Message = new List<string> { message }, Data = data };
         }
 
         //kaydet, geri dönüş olmayan
-        public static Result<T> Created(string mesaj)
+        public static Result<T> Created(string message)
         {
-            return new Result<T> { StatusCode = 201, Mesaj = new List<string> { mesaj } };
+            return new Result<T> { StatusCode = 201, Message = new List<string> { message } };
         }
 
         //kullanıcı hataları. Validasyonlar falan
-        public static Result<T> BadRequest(string mesaj)
+        public static Result<T> BadRequest(string message)
         {
-            return new Result<T> { StatusCode = 400, Mesaj = new List<string> { mesaj } };
+            return new Result<T> { StatusCode = 400, Message = new List<string> { message } };
         }
 
         //kullanıcı hataları. Validasyonlar falan
-        public static Result<T> BadRequest(List<string> mesaj)
+        public static Result<T> BadRequest(List<string> message)
         {
-            return new Result<T> { StatusCode = 400, Mesaj = mesaj };
+            return new Result<T> { StatusCode = 400, Message = message };
         }
 
         //Loginsiz giriş denemesi
-        public static Result<T> Unauthorized(string mesaj)
+        public static Result<T> Unauthorized(string message)
         {
-            return new Result<T> { StatusCode = 401, Mesaj = new List<string> { mesaj } };
+            return new Result<T> { StatusCode = 401, Message = new List<string> { message } };
         }
 
         //Yetkisiz işlem
-        public static Result<T> Forbidden(string mesaj)
+        public static Result<T> Forbidden(string message)
         {
-            return new Result<T> { StatusCode = 403, Mesaj = new List<string> { mesaj } };
+            return new Result<T> { StatusCode = 403, Message = new List<string> { message } };
         }
 
         //Datanın bulunamama durumu
-        public static Result<T> NotFound(string mesaj)
+        public static Result<T> NotFound(string message)
         {
-            return new Result<T> { StatusCode = 404, Mesaj = new List<string> { mesaj } };
+            return new Result<T> { StatusCode = 404, Message = new List<string> { message } };
         }
 
         //Sistemsel hatalar için
-        public static Result<T> Error(string mesaj)
+        public static Result<T> Error(string message)
         {
-            return new Result<T> { StatusCode = 500, Mesaj = new List<string> { mesaj } };
+            return new Result<T> { StatusCode = 500, Message = new List<string> { message } };
         }
     }
 

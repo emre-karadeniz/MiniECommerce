@@ -22,7 +22,7 @@ namespace MiniECommerce.Application.Core.Mappings
             CreateMap<RegisterRequest, RegisterCommand>();
             CreateMap<LoginRequest, LoginCommand>();
             CreateMap<Product, ProductResponse>();
-            CreateMap<UpdateProductRequest,UpdateProductCommand>();
+            CreateMap<UpdateProductRequest, UpdateProductCommand>();
             CreateMap<UpdateProductCommand, Product>();
             CreateMap<CreateBasketItemRequest, CreateBasketItemCommand>();
             CreateMap<UpdateBasketItemQuantityRequest, UpdateBasketItemQuantityCommand>();

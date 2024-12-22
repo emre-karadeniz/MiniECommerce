@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MiniECommerce.Contracts.Authentication
+﻿namespace MiniECommerce.Contracts.Authentication
 {
-    public class RegisterRequest
-    {
-        public string UserName { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string Password { get; set; }
-        public bool IsAdmin { get; set; }
-    }
+    public record RegisterRequest(string UserName, string FirstName, string LastName, string Password, bool IsAdmin);
 }

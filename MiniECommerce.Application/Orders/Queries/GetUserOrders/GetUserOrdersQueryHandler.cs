@@ -2,14 +2,10 @@
 using MiniECommerce.Application.Abstractions.Authentication.Jwt;
 using MiniECommerce.Application.Abstractions.Data;
 using MiniECommerce.Application.Abstractions.Messaging;
+using MiniECommerce.Application.Core.Constants;
 using MiniECommerce.Contracts.Orders;
 using MiniECommerce.Domain.Core;
 using MiniECommerce.Domain.Orders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniECommerce.Application.Orders.Queries.GetUserOrders
 {
@@ -27,17 +23,17 @@ namespace MiniECommerce.Application.Orders.Queries.GetUserOrders
         public async Task<Result<List<UserOrderResponse>>> Handle(GetUserOrdersQuery request, CancellationToken cancellationToken)
         {
             var response = await _appDbContext.Set<Order>()
-                .Where(x => x.UserId == _userIdentifierProvider.UserId)
-                .OrderByDescending(x => x.CreatedDate)
-                .Select(x => new UserOrderResponse()
+                .Where(o => o.UserId == _userIdentifierProvider.UserId)
+                .OrderByDescending(o => o.CreatedDate)
+                .Select(o => new UserOrderResponse()
                 {
-                    Id = x.Id,
-                    Status = x.Status.ToString(),
-                    TotalPrice = x.TotalPrice,
-                    CreatedDate = x.CreatedDate
-                }).ToListAsync();
+                    Id = o.Id,
+                    Status = o.Status.ToString(),
+                    TotalPrice = o.TotalPrice,
+                    CreatedDate = o.CreatedDate
+                }).AsNoTracking().ToListAsync();
 
-            return Result<List<UserOrderResponse>>.Success("", response);
+            return Result<List<UserOrderResponse>>.Success(Messages.Common.Success, response);
         }
     }
 }

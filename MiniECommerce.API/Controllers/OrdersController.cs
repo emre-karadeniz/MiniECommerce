@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using MiniECommerce.Application.Baskets.Commands.CreateBasketItem;
 using MiniECommerce.Application.Orders.Commands.AdminApproveOrder;
 using MiniECommerce.Application.Orders.Commands.AdminCancelOrder;
 using MiniECommerce.Application.Orders.Commands.CancelOrder;
@@ -12,7 +10,7 @@ using MiniECommerce.Application.Orders.Queries.GetAdminOrders;
 using MiniECommerce.Application.Orders.Queries.GetAdminOrderWithItems;
 using MiniECommerce.Application.Orders.Queries.GetUserOrders;
 using MiniECommerce.Application.Orders.Queries.GetUserOrderWithItems;
-using MiniECommerce.Contracts.Baskets;
+using System.ComponentModel.DataAnnotations;
 
 namespace MiniECommerce.API.Controllers
 {
@@ -80,7 +78,7 @@ namespace MiniECommerce.API.Controllers
 
         [HttpGet("[action]")]
         [Authorize(Roles = "User")]
-        public async Task<IActionResult> GetUserOrderWithItems(Guid orderId)
+        public async Task<IActionResult> GetUserOrderWithItems([Required] Guid orderId)
         {
             var response = await _mediator.Send(new GetUserOrderWithItemsQuery(orderId));
             return CreateActionResult(response);

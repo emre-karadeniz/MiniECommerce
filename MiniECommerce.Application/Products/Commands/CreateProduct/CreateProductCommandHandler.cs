@@ -7,7 +7,7 @@ using MiniECommerce.Domain.Products;
 
 namespace MiniECommerce.Application.Products.Commands.CreateProduct
 {
-    public class CreateProductCommandHandler: ICommandHandler<CreateProductCommand, Result<Guid>>
+    public class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, Result<Guid>>
     {
         private readonly IProductRepository _productRepository;
         private readonly IUnitOfWork _unitOfWork;
@@ -23,7 +23,7 @@ namespace MiniECommerce.Application.Products.Commands.CreateProduct
         public async Task<Result<Guid>> Handle(CreateProductCommand request, CancellationToken cancellationToken)
         {
             var product = _mapper.Map<Product>(request);
-            product.Id=Guid.NewGuid();
+            product.Id = Guid.NewGuid();
             await _productRepository.AddAsync(product);
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);

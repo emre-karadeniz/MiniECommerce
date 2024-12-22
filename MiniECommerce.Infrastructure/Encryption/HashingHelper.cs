@@ -1,13 +1,9 @@
 ﻿using MiniECommerce.Application.Abstractions.Encryption;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniECommerce.Infrastructure.Encryption
 {
-    internal class HashingHelper: IHashingHelper
+    internal class HashingHelper : IHashingHelper
     {
         public void CreatePasswordHash(string password, out byte[] passwordHash, out byte[] passwordSalt)
         {

@@ -1,15 +1,9 @@
 ﻿using AutoMapper;
 using MiniECommerce.Application.Abstractions.Messaging;
 using MiniECommerce.Application.Core.Constants;
-using MiniECommerce.Application.Products.Queries.GetProducts;
 using MiniECommerce.Contracts.Products;
 using MiniECommerce.Domain.Core;
 using MiniECommerce.Domain.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniECommerce.Application.Products.Queries.GetProductById
 {
@@ -29,7 +23,7 @@ namespace MiniECommerce.Application.Products.Queries.GetProductById
             var products = await _productRepository.GetByIdAsync(request.Id, cancellationToken);
             if (products == null)
             {
-                return Result<ProductResponse>.NotFound("bulunamadı");
+                return Result<ProductResponse>.NotFound(Messages.Common.NotFound);
             }
             var response = _mapper.Map<ProductResponse>(products);
             return Result<ProductResponse>.Success(Messages.Common.Success, response);

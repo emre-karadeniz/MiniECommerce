@@ -1,14 +1,8 @@
-﻿using AutoMapper;
-using MiniECommerce.Application.Abstractions.Data;
+﻿using MiniECommerce.Application.Abstractions.Data;
 using MiniECommerce.Application.Abstractions.Messaging;
 using MiniECommerce.Application.Core.Constants;
 using MiniECommerce.Domain.Core;
 using MiniECommerce.Domain.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniECommerce.Application.Products.Commands.DeleteProduct
 {
@@ -25,10 +19,10 @@ namespace MiniECommerce.Application.Products.Commands.DeleteProduct
 
         public async Task<Result<NoContentDto>> Handle(DeleteProductCommand request, CancellationToken cancellationToken)
         {
-            var product =await _productRepository.GetByIdAsync(request.ProductId);
+            var product = await _productRepository.GetByIdAsync(request.ProductId);
             if (product == null)
             {
-                return Result<NoContentDto>.NotFound("ürün bulunamadı");
+                return Result<NoContentDto>.NotFound(Messages.Common.NotFound);
             }
 
             _productRepository.Delete(product);

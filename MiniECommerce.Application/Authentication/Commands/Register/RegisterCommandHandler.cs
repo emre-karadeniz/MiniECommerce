@@ -1,16 +1,9 @@
-﻿using AutoMapper;
-using MiniECommerce.Application.Abstractions.Data;
+﻿using MiniECommerce.Application.Abstractions.Data;
 using MiniECommerce.Application.Abstractions.Encryption;
 using MiniECommerce.Application.Abstractions.Messaging;
 using MiniECommerce.Application.Core.Constants;
 using MiniECommerce.Domain.Core;
 using MiniECommerce.Domain.Users;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniECommerce.Application.Authentication.Commands.Register
 {
@@ -18,14 +11,12 @@ namespace MiniECommerce.Application.Authentication.Commands.Register
     {
         private readonly IUserRepository _userRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
         private readonly IHashingHelper _hashingHelper;
 
-        public RegisterCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork, IMapper mapper, IHashingHelper hashingHelper)
+        public RegisterCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork, IHashingHelper hashingHelper)
         {
             _userRepository = userRepository;
             _unitOfWork = unitOfWork;
-            _mapper = mapper;
             _hashingHelper = hashingHelper;
         }
 
@@ -33,7 +24,7 @@ namespace MiniECommerce.Application.Authentication.Commands.Register
         {
             if (await _userRepository.IsUserNameUniqueAsync(request.UserName))
             {
-                return Result<NoContentDto>.BadRequest("This username is in use.");
+                return Result<NoContentDto>.BadRequest(Messages.Login.RegisterFailed);
             }
 
             var user = new User();
