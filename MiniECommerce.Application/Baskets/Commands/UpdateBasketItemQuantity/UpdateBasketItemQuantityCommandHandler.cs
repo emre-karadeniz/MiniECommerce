@@ -25,7 +25,7 @@ namespace MiniECommerce.Application.Baskets.Commands.UpdateBasketItemQuantity
 
             if (basketItem == null)
             {
-                return Result<NoContentDto>.NotFound("sepet böyle bir ürün bulunamadı");
+                return Result<NoContentDto>.NotFound(Messages.Common.NotFound);
             }
 
             basketItem.Quantity = request.IsIncrease ? basketItem.Quantity + 1 : basketItem.Quantity - 1;

@@ -1,12 +1,8 @@
 ﻿using MiniECommerce.Application.Abstractions.Data;
 using MiniECommerce.Application.Abstractions.Messaging;
+using MiniECommerce.Application.Core.Constants;
 using MiniECommerce.Domain.Core;
 using MiniECommerce.Domain.Orders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniECommerce.Application.Orders.Commands.AdminCancelOrder
 {
@@ -25,12 +21,12 @@ namespace MiniECommerce.Application.Orders.Commands.AdminCancelOrder
             var order = await _orderRepository.GetOrderByIdAsync(request.OrderId, cancellationToken);
             if (order == null)
             {
-                return Result<NoContentDto>.BadRequest("Sipariş bulunamadı");
+                return Result<NoContentDto>.BadRequest(Messages.Common.NotFound);
             }
             order.Status = OrderStatus.Cancelled;
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Result<NoContentDto>.Success("");
+            return Result<NoContentDto>.Success("Order Canceled.");
         }
     }
 }

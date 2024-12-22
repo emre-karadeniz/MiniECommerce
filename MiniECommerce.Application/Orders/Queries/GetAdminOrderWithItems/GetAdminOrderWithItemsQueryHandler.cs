@@ -1,15 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MiniECommerce.Application.Abstractions.Authentication.Jwt;
 using MiniECommerce.Application.Abstractions.Data;
 using MiniECommerce.Application.Abstractions.Messaging;
+using MiniECommerce.Application.Core.Constants;
 using MiniECommerce.Contracts.Orders;
 using MiniECommerce.Domain.Core;
 using MiniECommerce.Domain.Orders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniECommerce.Application.Orders.Queries.GetAdminOrderWithItems
 {
@@ -25,29 +20,29 @@ namespace MiniECommerce.Application.Orders.Queries.GetAdminOrderWithItems
         public async Task<Result<AdminOrderWithItemsResponse>> Handle(GetAdminOrderWithItemsQuery request, CancellationToken cancellationToken)
         {
             var response = await _appDbContext.Set<Order>()
-                .Where(x => x.Id == request.OrderId)
-                .Include(x=>x.OrderItems)
-                .Include(x=>x.User)
-                .OrderByDescending(x => x.CreatedDate)
-                .Select(x => new AdminOrderWithItemsResponse()
+                .Where(o => o.Id == request.OrderId)
+                .Include(o => o.OrderItems)
+                .Include(o => o.User)
+                .OrderByDescending(o => o.CreatedDate)
+                .Select(o => new AdminOrderWithItemsResponse()
                 {
-                    Id = x.Id,
-                    UserId = x.UserId,
-                    FullName= x.User.FirstName + " " + x.User.LastName,
-                    Status = x.Status.ToString(),
-                    TotalPrice = x.TotalPrice,
-                    CreatedDate = x.CreatedDate,
-                    OrderItems =x.OrderItems.Select(i => new OrderItemResponse()
+                    Id = o.Id,
+                    UserId = o.UserId,
+                    FullName = o.User.FirstName + " " + o.User.LastName,
+                    Status = o.Status.ToString(),
+                    TotalPrice = o.TotalPrice,
+                    CreatedDate = o.CreatedDate,
+                    OrderItems = o.OrderItems.Select(i => new OrderItemResponse()
                     {
-                        Id=i.Id,
+                        Id = i.Id,
                         ProductId = i.ProductId,
                         ProductName = i.ProductName,
                         ProductPrice = i.ProductPrice,
                         Quantity = i.Quantity
                     }).ToList()
-                }).FirstOrDefaultAsync();
+                }).AsNoTracking().FirstOrDefaultAsync();
 
-            return Result<AdminOrderWithItemsResponse>.Success("", response);
+            return Result<AdminOrderWithItemsResponse>.Success(Messages.Common.Success, response);
         }
     }
 }

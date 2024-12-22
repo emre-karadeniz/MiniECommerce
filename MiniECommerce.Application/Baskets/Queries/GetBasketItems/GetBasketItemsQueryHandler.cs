@@ -7,11 +7,6 @@ using MiniECommerce.Contracts.Baskets;
 using MiniECommerce.Domain.Baskets;
 using MiniECommerce.Domain.Core;
 using MiniECommerce.Domain.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniECommerce.Application.Baskets.Queries.GetBasketItems
 {
@@ -41,7 +36,7 @@ namespace MiniECommerce.Application.Baskets.Queries.GetBasketItems
                                       ProductId = bi.ProductId,
                                       ProductName = p.Name,
                                       ProductPrice = p.Price
-                                  }).ToListAsync(cancellationToken);
+                                  }).AsNoTracking().ToListAsync(cancellationToken);
 
             return Result<List<BasketItemResponse>>.Success(Messages.Common.Success, response);
         }

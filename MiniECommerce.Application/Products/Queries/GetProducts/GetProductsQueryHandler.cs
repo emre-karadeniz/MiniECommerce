@@ -1,14 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using MiniECommerce.Application.Abstractions.Messaging;
+using MiniECommerce.Application.Core.Constants;
 using MiniECommerce.Contracts.Products;
 using MiniECommerce.Domain.Core;
 using MiniECommerce.Domain.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniECommerce.Application.Products.Queries.GetProducts
 {
@@ -27,7 +23,7 @@ namespace MiniECommerce.Application.Products.Queries.GetProducts
         {
             var products = await _productRepository.GetAll().OrderByDescending(x => x.CreatedDate).ToListAsync(cancellationToken);
             var response = _mapper.Map<List<ProductResponse>>(products);
-            return Result<List<ProductResponse>>.Success("", response);
+            return Result<List<ProductResponse>>.Success(Messages.Common.Success, response);
         }
     }
 }

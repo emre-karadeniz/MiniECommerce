@@ -9,6 +9,7 @@ using MiniECommerce.Application.Products.Commands.UpdateProductStock;
 using MiniECommerce.Application.Products.Queries.GetProductById;
 using MiniECommerce.Application.Products.Queries.GetProducts;
 using MiniECommerce.Contracts.Products;
+using System.ComponentModel.DataAnnotations;
 
 namespace MiniECommerce.API.Controllers
 {
@@ -59,7 +60,7 @@ namespace MiniECommerce.API.Controllers
         }
 
         [HttpGet("[action]")]
-        public async Task<IActionResult> GetProductById(Guid id)
+        public async Task<IActionResult> GetProductById([Required] Guid id)
         {
             var response = await _mediator.Send(new GetProductByIdQuery(id));
             return CreateActionResult(response);

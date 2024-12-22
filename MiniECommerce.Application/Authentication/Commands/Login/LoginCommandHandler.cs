@@ -1,14 +1,10 @@
 ﻿using MiniECommerce.Application.Abstractions.Authentication.Jwt;
 using MiniECommerce.Application.Abstractions.Encryption;
 using MiniECommerce.Application.Abstractions.Messaging;
+using MiniECommerce.Application.Core.Constants;
 using MiniECommerce.Contracts.Authentication;
 using MiniECommerce.Domain.Core;
 using MiniECommerce.Domain.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniECommerce.Application.Authentication.Commands.Login
 {
@@ -29,19 +25,19 @@ namespace MiniECommerce.Application.Authentication.Commands.Login
         {
             var user = await _userRepository.GetByUserNameAsync(request.UserName);
 
-            if (user == null) 
+            if (user == null)
             {
-                return Result<TokenResponse>.BadRequest("Username or password is incorrect.");
+                return Result<TokenResponse>.BadRequest(Messages.Login.LoginFailed);
             }
 
-            if(!_hashingHelper.VerifyPasswordHash(request.Password,user.PWHash,user.PWSalt))
+            if (!_hashingHelper.VerifyPasswordHash(request.Password, user.PWHash, user.PWSalt))
             {
-                return Result<TokenResponse>.BadRequest("Username or password is incorrect.");
+                return Result<TokenResponse>.BadRequest(Messages.Login.LoginFailed);
             }
 
             var tokenResponse = await _tokenHelper.CreateToken(user, cancellationToken);
 
-            return Result<TokenResponse>.Success("başarılı",tokenResponse);
+            return Result<TokenResponse>.Success(Messages.Common.Success, tokenResponse);
         }
     }
 }

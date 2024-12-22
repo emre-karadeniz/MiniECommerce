@@ -1,15 +1,12 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MiniECommerce.Application.Baskets.Commands.ClearBasket;
 using MiniECommerce.Application.Baskets.Commands.CreateBasketItem;
 using MiniECommerce.Application.Baskets.Commands.UpdateBasketItemQuantity;
 using MiniECommerce.Application.Baskets.Queries.GetBasketItems;
-using MiniECommerce.Application.Products.Commands.CreateProduct;
 using MiniECommerce.Contracts.Baskets;
-using MiniECommerce.Contracts.Products;
 
 namespace MiniECommerce.API.Controllers
 {

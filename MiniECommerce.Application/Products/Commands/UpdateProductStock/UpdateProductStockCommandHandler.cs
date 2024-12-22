@@ -3,11 +3,6 @@ using MiniECommerce.Application.Abstractions.Messaging;
 using MiniECommerce.Application.Core.Constants;
 using MiniECommerce.Domain.Core;
 using MiniECommerce.Domain.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniECommerce.Application.Products.Commands.UpdateProductStock
 {
@@ -27,9 +22,9 @@ namespace MiniECommerce.Application.Products.Commands.UpdateProductStock
             var product = await _productRepository.GetByIdAsync(request.ProductId, cancellationToken);
             if (product == null)
             {
-                return Result<NoContentDto>.NotFound("");
+                return Result<NoContentDto>.NotFound(Messages.Common.NotFound);
             }
-            product.Stock=request.Stock;
+            product.Stock = request.Stock;
             await _unitOfWork.SaveChangesAsync(cancellationToken);
             return Result<NoContentDto>.Success(Messages.Common.Update);
         }

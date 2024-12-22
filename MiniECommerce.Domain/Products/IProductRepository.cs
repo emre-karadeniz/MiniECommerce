@@ -1,5 +1,4 @@
-﻿using MiniECommerce.Domain.Core;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
 namespace MiniECommerce.Domain.Products
 {

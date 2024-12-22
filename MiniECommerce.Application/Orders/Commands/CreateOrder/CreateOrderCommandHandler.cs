@@ -1,16 +1,11 @@
 ﻿using MiniECommerce.Application.Abstractions.Authentication.Jwt;
 using MiniECommerce.Application.Abstractions.Data;
 using MiniECommerce.Application.Abstractions.Messaging;
+using MiniECommerce.Application.Core.Constants;
 using MiniECommerce.Domain.Baskets;
 using MiniECommerce.Domain.Core;
 using MiniECommerce.Domain.Orders;
 using MiniECommerce.Domain.Products;
-using MiniECommerce.Domain.Users;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MiniECommerce.Application.Orders.Commands.CreateOrder
 {
@@ -35,53 +30,52 @@ namespace MiniECommerce.Application.Orders.Commands.CreateOrder
 
         public async Task<Result<NoContentDto>> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            var basket = await _basketRepository.GetActiveBasketWithBasketItemsAsync(_userIdentifierProvider.UserId,cancellationToken);
+            var activeBasket = await _basketRepository.GetActiveBasketWithBasketItemsAsync(_userIdentifierProvider.UserId, cancellationToken);
 
-            if (basket == null)
+            if (activeBasket == null)
             {
-                return Result<NoContentDto>.BadRequest("");
+                return Result<NoContentDto>.BadRequest(Messages.Common.NotFound);
             }
 
-            if (basket.BasketItems.Count == 0)
+            if (activeBasket.BasketItems.Count == 0)
             {
-                return Result<NoContentDto>.BadRequest("");
+                return Result<NoContentDto>.BadRequest(Messages.Common.NotFound);
             }
 
-
-            var productIds = basket.BasketItems.Select(bi => bi.ProductId).ToList();
+            var productIds = activeBasket.BasketItems.Select(bi => bi.ProductId).ToList();
             var products = await _productRepository.GetProductsByIdsAsync(productIds);
 
             var productDictionary = products.ToDictionary(p => p.Id);
 
-            foreach (var basketItem in basket.BasketItems)
+            foreach (var basketItem in activeBasket.BasketItems)
             {
                 if (!productDictionary.TryGetValue(basketItem.ProductId, out var product))
                 {
-                    return Result<NoContentDto>.BadRequest("Ürün bulunamadı. İşlem iptal edildi.");
+                    return Result<NoContentDto>.BadRequest("No product found");
                 }
 
                 if (product.Stock < basketItem.Quantity)
                 {
-                    return Result<NoContentDto>.BadRequest($"{product.Name} stok yetersiz. İşlem iptal edildi.");
+                    return Result<NoContentDto>.BadRequest($"Insufficient stock for {product.Name}.");
                 }
                 //ürünlerin stoklarının düşmesi
-                product.Stock-=basketItem.Quantity;
+                product.Stock -= basketItem.Quantity;
             }
 
-            var totalPrice = basket.BasketItems.Sum(x=>x.Quantity * x.Product.Price);
+            var totalPrice = activeBasket.BasketItems.Sum(x => x.Quantity * x.Product.Price);
 
             var order = new Order()
             {
                 Id = Guid.NewGuid(),
                 UserId = _userIdentifierProvider.UserId,
-                BasketId = basket.Id,
+                BasketId = activeBasket.Id,
                 Status = OrderStatus.Created,
                 TotalPrice = totalPrice
             };
 
             await _orderRepository.AddAsync(order);
 
-            var orderItems = basket.BasketItems.Select(basketItem => new OrderItem
+            var orderItems = activeBasket.BasketItems.Select(basketItem => new OrderItem
             {
                 Id = Guid.NewGuid(),
                 OrderId = order.Id,
@@ -93,10 +87,10 @@ namespace MiniECommerce.Application.Orders.Commands.CreateOrder
 
             await _orderItemRepository.AddRangeAsync(orderItems);
 
-            basket.Status=BasketStatus.Completed;
+            activeBasket.Status = BasketStatus.Completed;
 
             await _unitOfWork.SaveChangesAsync(cancellationToken);
-            return Result<NoContentDto>.Success("");
+            return Result<NoContentDto>.Success("Order created.");
         }
     }
 }
