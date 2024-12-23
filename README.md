@@ -1,67 +1,39 @@
 # MiniECommerce
 
-* appsettings.json dosyasından ConnectionString bilgisayarınıza göre ayarlanmalıdır.
-* Proje çalıştırıldığında veritabanı ve örnek veriler otomatik olarak oluşmaktadır.
-* Script dosyası bu reponun içerisindedir. (MiniECommerceDbScript.sql)
-* Test kullanıcı bilgileri aşağıdaki gibidir. Bu kullanıcılar ile test edebilirsiniz.
+## Proje Kurulumu
+- appsettings.json dosyasından ConnectionString bilgisayarınıza göre ayarlanmalıdır.
+- Proje çalıştırıldığında veritabanı ve örnek veriler otomatik olarak oluşmaktadır.
+- Script dosyası bu reponun içerisindedir: *MiniECommerceDbScript.sql*
 
-Yetki: User
+## Test Kullanıcıları
+Proje içerisinde aşağıdaki test kullanıcıları tanımlıdır. Bu kullanıcılar ile API'yi test edebilirsiniz.
 
-Kullanıcı Adı: test
+| Yetki   | Kullanıcı Adı | Şifre  |
+|---------|---------------|--------|
+| User    | test          | 123456 |
+| Admin   | admin         | 123456 |
 
-Şifre: 123456
+## API Endpointleri
 
---------------------------
-
-Yetki: Admin
-
-Kullanıcı Adı: admin
-
-Şifre: 123456
-
----------------------------
-
-YETKİLERE GÖRE ENDPOINTLER
-
-* /api/Authentication/Register -> Herkes erişebilir. Kullanıcı kaydetme işleminde "user" ve "admin" yetkisi seçilebilir. Ekstra kaydet metodu yazmamak için basit bir yöntemle bunu yaptım.
-
-* /api/Authentication/Login -> Herkes erişebilir. Kullanıcı girişi için.
-
-
-* /api/Products/CreateProduct-> Admin erişebilir. Ürün kaydetme işlemi yapılmaktadır.
-
-* /api/Products/UpdateProduct -> Admin erişebilir. Ürün güncelleme işlemi yapılmaktadır.
-
-* /api/Products/UpdateProductStock -> Admin erişebilir. Ürünün sadece stok bilgisini günceller.
-
-* /api/Products/DeleteProduct -> Admin erişebilir. Ürün silme işlemi yapılmaktadır.
-
-* /api/Products/GetProducts -> Herkes erişebilir. Tüm ürünleri listeler.
-
-* /api/Products/GetProductById -> Herkes erişebilir. Verilen ürün Id için detay bilgisi getirilir.
-
-
-* /api/Baskets/CreateBasketItem -> User erişebilir. Ürün Id ve adetine göre sepete ekleme yapar. Sepet yok ise oluşturur varsa üzerine ekleme yapar.
-
-* /api/Baskets/UpdateBasketItemQuantity -> User erişebilir. Sepetin içinde bulunan kayıt için adetini arttırma yada eksiltme yapar. (BasketItem)
-
-* /api/Baskets/ClearBasket -> User erişebilir. Kullanıcının bulunan aktif sepetini temizler.
-
-* /api/Baskets/GetBasketItems -> User erişebilir. Sepetin içindeki kayıtları getirir. (BasketItem)
-
-
-* /api/Orders/CreateOrder -> User erişebilir. Kullanıcının aktif sepeti için sipariş oluşturur.
-
-* /api/Orders/CancelOrder -> User erişebilir. Kullanıcının oluşturduğu siparişi iptal eder.
-
-* /api/Orders/GetUserOrders -> User erişebilir. Kullanıcının siparişlerini listeler.
-
-* /api/Orders/GetUserOrderWithItems -> User erişebilir. Siparişin detaylarını listeler.
-
-* /api/Orders/AdminCancelOrder -> Admin erişebilir. Oluşturulmuş bir siparişi iptal eder.
-
-* /api/Orders/AdminApproveOrder -> Admin erişebilir. Oluşturulmuş siparişi onaylar.
-
-* /api/Orders/GetAdminOrders -> Admin erişebilir. Siparişleri listeler.
-
-* /api/Orders/GetAdminOrderWithItems -> Admin erişebilir. Herhangi bir siparişin detaylarını listeler.
+| Endpoint                                | Erişim       | Açıklama                          |
+|-----------------------------------------|--------------|------------------------------------|
+| POST /api/Authentication/Register     | Herkes       | Yeni kullanıcı kaydı oluşturur.   |
+| POST /api/Authentication/Login        | Herkes       | Kullanıcı girişi yapar.           |
+| POST /api/Baskets/CreateBasketItem    | Kullanıcı    | Sepete ürün ekler.                |
+| PATCH /api/Baskets/UpdateBasketItemQuantity | Kullanıcı | Sepetteki ürün miktarını günceller. |
+| DELETE /api/Baskets/ClearBasket       | Kullanıcı    | Sepeti temizler.                  |
+| GET /api/Baskets/GetBasketItems       | Kullanıcı    | Sepet içeriklerini getirir.       |
+| POST /api/Orders/CreateOrder          | Kullanıcı    | Yeni sipariş oluşturur.           |
+| PATCH /api/Orders/CancelOrder         | Kullanıcı    | Siparişi iptal eder.              |
+| PATCH /api/Orders/AdminCancelOrder    | Yönetici     | Siparişi iptal eder. |
+| PATCH /api/Orders/AdminApproveOrder   | Yönetici     | Siparişi onaylar. |
+| GET /api/Orders/GetAdminOrders        | Yönetici     | Tüm siparişleri listeler.         |
+| GET /api/Orders/GetAdminOrderWithItems| Yönetici     | Sipariş bilgilerini ve detaylarını getirir.|
+| GET /api/Orders/GetUserOrders         | Kullanıcı    | Kullanıcı siparişlerini listeler. |
+| GET /api/Orders/GetUserOrderWithItems | Kullanıcı    | Kullanıcı sipariş bilgilerini ve detayını getirir. |
+| POST /api/Products/CreateProduct      | Yönetici     | Yeni ürün ekler.                  |
+| PUT /api/Products/UpdateProduct       | Yönetici     | Mevcut ürünü günceller.           |
+| PATCH /api/Products/UpdateProductStock| Yönetici     | Ürün stok bilgisini günceller.  |
+| DELETE /api/Products/DeleteProduct    | Yönetici     | Ürünü siler.                      |
+| GET /api/Products/GetProducts         | Herkes       | Ürün listesini getirir.           |
+| GET /api/Products/GetProductById      | Herkes       | Belirli bir ürünü getirir.        |
