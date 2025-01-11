@@ -3,5 +3,6 @@
     public interface IUserIdentifierProvider
     {
         Guid UserId { get; }
+        List<string> Roles { get; }
     }
 }
