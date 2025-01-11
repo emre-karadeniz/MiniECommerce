@@ -43,7 +43,11 @@ namespace MiniECommerce.Application.Authentication.Commands.Register
             //IsAdmin eğer true ise Admin'dir, false ise User'dır.
             //Bu kaydetme işlemi için ekstra uğraşmamak için böyle yaptım.
             //Yoksa 2 adet kaydet lazım hem kullanıcı için hemde adminin herkesi kaydedebilmesi için.
-            await _userRepository.AddUserRoleAsync(user.Id, request.IsAdmin ? 1 : 2, cancellationToken);
+
+            //int roleId = int.Parse(request.RoleId.ToString());
+            int roleId = (int)request.RoleId;
+
+            await _userRepository.AddUserRoleAsync(user.Id, roleId, cancellationToken);
 
             await _userRepository.AddAsync(user, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
